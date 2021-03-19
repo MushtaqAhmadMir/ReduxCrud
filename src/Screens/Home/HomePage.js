@@ -13,8 +13,11 @@ import imagePath from '../../constants/imagePath';
 import navigationStrings from '../../constants/navigationStrings';
 import fontFamily from '../../styles/fontFamily';
 import {clearUserData} from '../../utils/utils';
+import store from '../../redux/store'
+import { connect } from 'react-redux';
 
-export default class HomePage extends Component {
+
+ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +46,7 @@ export default class HomePage extends Component {
       .then((resJson) => {
         this.setState({data: resJson.data});
         console.log(resJson.data);
-        // this.setState({ refreshing: false });
+        
       })
       .catch((e) => console.log(e));
   }
@@ -92,6 +95,8 @@ export default class HomePage extends Component {
   };
 
   render() {
+    const {itemList}=this.props;
+    console.log(itemList,"inhomePage")
     const {navigation} = this.props;
     return (
       <View>
@@ -123,6 +128,17 @@ export default class HomePage extends Component {
     );
   }
 }
+const mapStateToProps=state=>{
+
+  return(
+    {
+      itemList:state.home.itemList
+    }
+  )
+}
+
+export default connect(mapStateToProps)(HomePage)
+
 const Styles = StyleSheet.create({
   container: {
     justifyContent: 'center',

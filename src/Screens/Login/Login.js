@@ -18,6 +18,8 @@ import navigationStrings from '../../constants/navigationStrings';
 import fontFamily from '../../styles/fontFamily';
 import Validation from '../../utils/validation';
 import HomePage from '../Home/HomePage';
+import { connect } from 'react-redux';
+import store from '../../redux/store'
 
 class Login extends Component {
   constructor(props) {
