@@ -1,5 +1,6 @@
 export default {
 
     LOGIN:'LOGIN',
-    HOMEPAGE:'HOMEPAGE'
+    HOMEPAGE:'HOMEPAGE',
+   DELETE_ITEM:'DELETE_ITEM'
 }

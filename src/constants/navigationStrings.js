@@ -2,5 +2,6 @@ export default {
     LOGIN:"login",
     SIGNUP:'signup',
     HOME_PAGE:'homePage',
-    LANDINGPAGE:"landingPage"
+    LANDINGPAGE:"landingPage",
+    CART:"cart"
 }

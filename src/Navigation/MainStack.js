@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import navigationStrings from '../constants/navigationStrings';
-import {Home} from '../Screens';
+import {Cart, Home} from '../Screens';
 
 function MainStack(Stack) {
   return (
@@ -11,6 +11,13 @@ function MainStack(Stack) {
           headerShown: false,
         }}
         name={navigationStrings.HOME_PAGE}
+      />
+      <Stack.Screen
+        component={Cart}
+        options={{
+          headerShown: false,
+        }}
+        name={navigationStrings.CART}
       />
     </Fragment>
   );
