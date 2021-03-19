@@ -1,6 +1,6 @@
-import {LOGIN, SIGNUP} from '../config/urls';
+import {LOGIN, SIGNUP} from '../../config/urls';
 
-import {apiPost, setItem, setUserData} from "../utils/utils"
+import {apiPost, setItem, setUserData} from "../../utils/utils"
 
 
 export function login(data = {}){

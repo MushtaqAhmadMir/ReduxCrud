@@ -18,7 +18,7 @@ import FlashMessage, {
   hideMessage,
 } from 'react-native-flash-message';
 import Validation from '../../utils/validation';
-import api from '../../apis';
+import api from '../../redux/actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import Loader from '../../Components/Loader';
 import navigationStrings from '../../constants/navigationStrings';

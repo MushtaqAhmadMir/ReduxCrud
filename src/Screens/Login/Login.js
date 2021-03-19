@@ -13,7 +13,7 @@ import {
 import {showMessage} from 'react-native-flash-message';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import imagePath from '../../constants/imagePath';
-import api from '../../apis';
+import api from '../../redux/actions';
 import navigationStrings from '../../constants/navigationStrings';
 import fontFamily from '../../styles/fontFamily';
 import Validation from '../../utils/validation';
@@ -46,7 +46,7 @@ class Login extends Component {
   };
 
   apiCall = () => {
-    //  alert("Api Call")
+      // alert("Api Call")
     const {email, password} = this.state;
     if (this.isValidData()) {
       // alert('Valid Data');

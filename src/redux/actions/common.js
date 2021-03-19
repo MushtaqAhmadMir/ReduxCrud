@@ -1,5 +1,5 @@
-import { UPLOAD_IMAGE } from "../config/urls";
-import { apiPost } from "../utils/utils";
+import { UPLOAD_IMAGE } from "../../config/urls";
+import { apiPost } from "../../utils/utils";
 
 
 export function uploadImage(data={}){
