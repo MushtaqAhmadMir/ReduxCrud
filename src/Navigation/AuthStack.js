@@ -1,12 +1,19 @@
 import React, {Fragment} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 // import Login from "../Screens/Login/Login";
-import {Login, Signup} from '../Screens';
+import {LandingPage, Login, Signup,MobileLogin} from '../Screens';
 import navigationStrings from '../constants/navigationStrings';
 
 function AuthStack(Stack) {
   return (
     <Fragment>
+     <Stack.Screen
+        component={LandingPage}
+        options={{
+          headerShown: false,
+        }}
+        name={navigationStrings.LANDING_PAGE}
+      />
       <Stack.Screen
         component={Signup}
         options={{
@@ -21,6 +28,13 @@ function AuthStack(Stack) {
         }}
         name={navigationStrings.LOGIN}
       />
+      <Stack.Screen
+      name={navigationStrings.MOBILE_LOGIN}
+      options={{
+        headerShown:false
+      }}
+      component={MobileLogin}
+    />
     </Fragment>
   );
 }

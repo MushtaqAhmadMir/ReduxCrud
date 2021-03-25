@@ -17,9 +17,12 @@ import api from '../../redux/actions';
 import navigationStrings from '../../constants/navigationStrings';
 import fontFamily from '../../styles/fontFamily';
 import Validation from '../../utils/validation';
-import HomePage from '../Home/HomePage';
-import { connect } from 'react-redux';
-import store from '../../redux/store'
+
+import StatusBar from '../../Components/StatusBar';
+import AuthHeader from '../../Components/AuthHeader';
+import colors from '../../styles/colors';
+
+import ButtonWithLoader from '../../Components/Button';
 
 class Login extends Component {
   constructor(props) {
@@ -48,7 +51,7 @@ class Login extends Component {
   };
 
   apiCall = () => {
-      // alert("Api Call")
+    // alert("Api Call")
     const {email, password} = this.state;
     if (this.isValidData()) {
       // alert('Valid Data');
@@ -78,7 +81,7 @@ class Login extends Component {
     //  alert()
     const error = Validation({email, password});
     if (error) {
-      alert(error);
+      // alert(error);
       showMessage({
         message: error,
         type: 'danger',
@@ -88,7 +91,7 @@ class Login extends Component {
     }
 
     showMessage({
-      message: 'Sucessfully SignUp',
+      message: 'Sucessfully Login',
       type: 'success',
       icon: 'sucess',
     });
@@ -96,58 +99,74 @@ class Login extends Component {
     return true;
   };
 
-  
-
   render() {
     // console.log(arr)
     const {bgUrl, resourcePath} = this.state;
     const {navigation} = this.props;
     return (
       <KeyboardAwareScrollView>
-        <ImageBackground source={bgUrl} style={styles.container}>
-          <View style={styles.upperRow}>
-            <Image style={styles.upperArrow} source={imagePath.leftArrow} />
-            <View style={styles.logoView}>
-              <TouchableOpacity>
-                <Image style={styles.imgLogo} source={resourcePath} />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.loginTextView}>
-            <Text style={styles.loginText}>Psilogica</Text>
-          </View>
-
-          <View style={styles.fieldView}>
+        <View style={{flex: 1}}>
+          <StatusBar />
+          <AuthHeader text={'LOGIN'} />
+          <View
+            style={{height: 150, margin: 10, justifyContent: 'space-around'}}>
             <TextInput
-              placeholderTextColor="white"
+              placeholderTextColor={colors.themeColor}
               placeholder="Email"
               style={styles.textInput}
               onChangeText={this.handleInputs('email')}
             />
+
             <TextInput
-              placeholderTextColor="white"
+              placeholderTextColor={colors.themeColor}
               placeholder="Password"
               secureTextEntry={true}
               style={styles.textInput}
               onChangeText={this.handleInputs('password')}
             />
-
-            <Image
-              style={styles.emailIcon}
-              source={{
-                uri: 'https://www.iconsdb.com/icons/preview/white/user-xl.png',
-              }}
-            />
-
-            <Image
-              style={styles.passwordIcon}
-              source={{
-                uri: 'https://www.iconsdb.com/icons/preview/white/lock-xxl.png',
-              }}
+          </View>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate(navigationStrings.MOBILE_LOGIN)
+            }
+            style={styles.mobileLogBtn}>
+            <Text style={{color: colors.white}}>Login via OTP</Text>
+          </TouchableOpacity>
+          <View style={{marginTop: 20}}>
+            <ButtonWithLoader
+              btnText={'LOG IN'}
+              color={colors.white}
+              btnStyle={styles.btnStyle}
+              onPress={this.onLogPress}
             />
           </View>
-          <Text style={styles.forgotText}>Forgot Password?</Text>
 
+          <View style={styles.socialRow}>
+            <View style={styles.hyphen} />
+            <Text style={styles.orText}>OR</Text>
+            <View style={styles.hyphen} />
+          </View>
+
+          <View style={styles.socialIconView}>
+            <TouchableOpacity>
+              <View style={styles.iconView}>
+                <Image
+                  style={styles.textFacebook}
+                  source={imagePath.facebookImage}
+                />
+                <Text>FACEBOOK</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View style={styles.iconView2}>
+                <Image
+                  style={styles.textGoogle}
+                  source={imagePath.googleImage}
+                />
+                <Text>GOOGLE</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
           <View
             style={{
               justifyContent: 'center',
@@ -159,53 +178,10 @@ class Login extends Component {
                 this.props.navigation.navigate(navigationStrings.SIGNUP);
               }}
               style={styles.alreadyText}>
-              New to Flipkart? Sign Up
+              New to HealthKart? Sign Up
             </Text>
           </View>
-        </ImageBackground>
-        {/* <FlashMessage position="top"/> */}
-        <View style={styles.radiusView}>
-          <TouchableOpacity style={styles.loginBtn} onPress={this.onLogPress}>
-            <Image style={styles.loginLogo} source={imagePath.rightArrow} />
-          </TouchableOpacity>
-          <View style={styles.iconView}>
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Text style={{fontSize: 20}}>
-                --------------- LOGIN USING ----------------
-              </Text>
-              <View style={styles.socialIcons}>
-                <TouchableOpacity style={styles.iconFb}>
-                  <Image
-                    style={styles.icon1}
-                    source={{
-                      uri:
-                        'https://www.iconsdb.com/icons/preview/white/facebook-xl.png',
-                    }}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.iconFb}>
-                  <Image
-                    style={styles.icon1}
-                    source={{
-                      uri:
-                        'https://www.iconsdb.com/icons/preview/white/instagram-xxl.png',
-                    }}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.iconFb}>
-                  <Image
-                    style={styles.icon1}
-                    source={{
-                      uri:
-                        'https://www.iconsdb.com/icons/preview/white/gmail-login-xxl.png',
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </View>
-          </View>
         </View>
-        {/* <HomePage  /> */}
       </KeyboardAwareScrollView>
     );
   }
@@ -213,169 +189,90 @@ class Login extends Component {
 
 export default Login;
 const styles = StyleSheet.create({
-  container: {
-    height: 700,
-    flex: 1,
-    resizeMode: 'contain',
-  },
-  upperRow: {
-    // backgroundColor:"red",
-    flexDirection: 'row',
-    height: 60,
-    //  ,justifyContent:"center"
-    alignItems: 'center',
-    height: 50,
-    justifyContent: 'space-between',
-    margin: 10,
-  },
-  upperArrow: {
-    height: 25,
-    width: 25,
-    marginLeft: 10,
-  },
-  logoView: {
-    height: 100,
-    justifyContent: 'center',
-  },
-  imgLogo: {
-    height: 50,
-    width: 50,
-  },
-  loginTextView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 25,
-  },
-  loginText: {
-    fontFamily: fontFamily.lobester,
-    fontSize: 45,
-    color: 'white',
-  },
   textInput: {
-    borderBottomWidth: 0.5,
-    width: 380,
-     backgroundColor: '#4DB8BA',
-     borderRadius: 5,
+    borderBottomWidth: 2,
+    // width: 380,
+    //  backgroundColor: '#4DB8BA',
+    borderRadius: 5,
     fontSize: 18,
-    paddingLeft: 50,
-    borderRadius:20
-    // borderBottomColor: 'white',
+    padding: 10,
+    // borderRadius:20
+    borderBottomColor: colors.themeColor,
   },
-  emailIcon: {
-    height: 30,
-    width: 30,
-    position: 'absolute',
-    left: 30,
-    top: 60,
-    // tintColor: 'darkgrey',
-  },
-  passwordIcon: {
-    height: 30,
-    width: 30,
-    position: 'absolute',
-    left: 30,
-    top: 150,
-    // tintColor: 'darkgrey',
-  },
-  loginLogo: {
-    height: 30,
-    width: 30,
-  },
+
   alreadyText: {
-    color: 'white',
+    color: colors.themeColor,
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: fontFamily.lobester,
   },
 
-  fieldView: {
-    height: 240,
-    alignItems: 'center',
-    position: 'relative',
-    justifyContent: 'space-around',
-    padding: 30,
-    // backgroundColor: 'yellow',
-  },
-  upperArrow: {
-    height: 25,
-    width: 25,
-    marginLeft: 10,
-  },
-  textLogo: {
-    fontWeight: 'bold',
-    fontSize: 25,
-    marginLeft: 140,
-  },
-  socialLogin: {
-    height: 200,
-    // backgroundColor:"red"
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    justifyContent: 'space-around',
-  },
-  radiusView: {
-    position: 'relative',
-    backgroundColor: 'white',
-    height: 255,
-    borderTopEndRadius: 80,
-    borderTopLeftRadius: 80,
-    marginTop: -230,
-    // width:500,
-  },
-  socialIcons: {
-    height: 40,
-    // backgroundColor:"yellow",
-    flexDirection: 'row',
-    justifyContent: 'center',
-    justifyContent: 'space-around',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // padding: 40,
-    width: 300,
-    marginTop: 40,
-  },
-  iconFb: {
-    backgroundColor: '#66ffff',
-    borderRadius: 30,
+  btnStyle: {
+    backgroundColor: colors.themeColor,
+    width: 400,
     height: 50,
-    width: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
   },
-  icon1: {
-    height: 30,
-    width: 30,
-  },
-  loginBtn: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    top: -30,
-    left: 175,
-    borderRadius: 100,
-    width: 60,
-    height: 60,
+  socialRow: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    marginTop: 20,
+  },
+  hyphen: {
+    width: 130,
+    height: 1,
+    backgroundColor: colors.textGrey,
+    opacity: 0.6,
+  },
+  orText: {
+    lineHeight: 24,
+    textAlign: 'center',
+    // fontFamily: fontFamily.medium,
+    opacity: 0.6,
+    marginTop: 0,
+    marginHorizontal: 16,
+  },
+  socialIconView: {
+    marginTop: 50,
+    flexDirection: 'row',
+    marginVertical: 10,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between',
   },
   iconView: {
-    // backgroundColor:"red",
-    marginTop: 100,
-  },
-  forgotText: {
-    color: 'white',
-    marginTop: -30,
-    marginLeft: 250,
-    fontSize: 18,
+    flexDirection: 'row',
+    borderWidth: 1,
+    padding: 5,
+    borderColor: colors.btnABlue,
+    borderRadius: 5,
+    marginRight: 20,
     width: 150,
-    fontFamily: fontFamily.lobester,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconView2: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: colors.orange,
+    borderRadius: 5,
+    width: 150,
+    padding: 5,
+  },
+  textFacebook: {height: 30, width: 30, marginRight: 3},
+  textGoogle: {height: 30, width: 30, marginRight: 10},
+
+  mobileLogBtn: {
+    alignItems: 'center',
+    backgroundColor: colors.themeColor,
+    height: 20,
+    borderRadius: 20,
+    width: 100,
+    alignSelf: 'flex-end',
+    marginRight: 15,
   },
 });

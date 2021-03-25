@@ -6,12 +6,14 @@ import MainStack from './MainStack';
 import { connect } from 'react-redux';
 const Stack = createStackNavigator();
 function  Routes(props) {
-  console.log(props.userData,"in routes")
-  const{userData}=props
+    const {userData}=props
+  //  const{name}=props.userData
+  
+      console.log(props.userData," otp name Data in routes")
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!userData && AuthStack(Stack)}
+        {!userData.contactDetails && AuthStack(Stack)}
         {MainStack(Stack)}
       </Stack.Navigator>
     </NavigationContainer>

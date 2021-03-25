@@ -5,29 +5,21 @@ import FlashMessage from 'react-native-flash-message';
 import {getUserData} from './src/utils/utils';
 import {  Provider } from 'react-redux';
 import store from './src/redux/store';
+import actions from './src/redux/actions';
 const {dispatch}=store
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoggedIn: false,
-    };
-  }
+  
   componentDidMount() {
     getUserData().then((res) => {
       if (res) {
-        dispatch({
-          type:types.LOGIN,
-          payload:res
-        })
+        // console.log(res.contactDetails, " otp detail IN app js")
+        actions.saveUserData(res)
       }
     });
   }
 
   render() {
     console.log(this.props,"userdata in ")
-    const {isLoggedIn} = this.state;
-    console.log(this.state.isLoggedIn, 'app');
     return (
       <Fragment>
       <Provider store={store}>

@@ -13,7 +13,7 @@ export default function (state=initialState,action) {
     switch (action.type){
 
         case types.LOGIN:{
-            console.log(action.payload,"in login function")
+            console.log(action.payload,"user data in login function")
             const userData={...action.payload}
 
 

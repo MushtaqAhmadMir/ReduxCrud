@@ -10,9 +10,9 @@ export async function getHeaders() {
   console.log(userData, 'the user data value ');
   if (userData) {
     userData = JSON.parse(userData);
-    console.log(userData.token, 'header');
+    console.log(userData.accessToken, 'header in the utils');
     return {
-      authorization: `Bearer ${userData.token}`,
+      authorization: `${userData.accessToken}`,
     };
   }
   return {};

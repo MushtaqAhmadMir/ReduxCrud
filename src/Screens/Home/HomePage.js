@@ -7,14 +7,22 @@ import {
   ScrollView,
   StyleSheet,
   TextInput,
+  Dimensions,
 } from "react-native";
 import FlatList from "../../Components/HomeStyle";
+import imagePath from "../../constants/imagePath";
 import navigationStrings from "../../constants/navigationStrings";
 import store from '../../redux/store'
 import types from "../../redux/types";
+import MyCarousel from '../../Components/SnapCarousel'
+import actions from "../../redux/actions";
+import { connect } from "react-redux";
+import { showMessage } from "react-native-flash-message";
+
+const {height,width} = Dimensions.get("screen")
 
 const {dispatch}=store
-export default class HomePage extends Component {
+ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,23 +32,22 @@ export default class HomePage extends Component {
       itemList: [
         {
           id: 1,
-          name: "Realme C11 (Rich Grey, 32GB)",
-          image:
-            "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "MusleBlaze Whey Protein, 8.8 lb",
+          image:imagePath.item1,
+          qnt:1, 
           originalPrice: 12999,
           reducedPrice: 9999,
           discount: 68,
           star: 3.9,
           number: 65067,
-          emi: "No Cost EMI",
-          exchange: 1400,
+         
         },
         {
           id: 2,
-          name: "POCO C3 (Arctic Blue,32 GB)",
+          name: "High Protien Serial",
           originalPrice: 19999,
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          qnt:1, 
+          image:imagePath.item2,
           reducedPrice: 12318,
           discount: 34,
           star: 3.9,
@@ -50,9 +57,9 @@ export default class HomePage extends Component {
         },
         {
           id: 3,
-          name: "POCO M3 (Cool Blue, 64 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "MASS GAINER IMPROVED",
+          image:imagePath.item3,
+          qnt:1, 
           originalPrice: 20999,
           reducedPrice: 13318,
           discount: 28,
@@ -63,9 +70,9 @@ export default class HomePage extends Component {
         },
         {
           id: 4,
-          name: "Redmi 9i(Midnight Black, 64 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "SLIM SHAKE",
+          image:imagePath.item4,
+          qnt:1, 
           originalPrice: 12999,
           reducedPrice: 11318,
           discount: 18.9,
@@ -76,10 +83,10 @@ export default class HomePage extends Component {
         },
         {
           id: 5,
-          name: "Motorola E7 Power(Blue,64 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "100% WHEY PROTIEN",
+          image:imagePath.item5,
           originalPrice: 14999,
+          qnt:1, 
           reducedPrice: 12318,
           discount: 28,
           star: 3.9,
@@ -89,9 +96,9 @@ export default class HomePage extends Component {
         },
         {
           id: 6,
-          name: "IPHONE 12 max Pro(Gold 128 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "PROTIEN SLIM NATURAL",
+          image:imagePath.item6,
+          qnt:1, 
           originalPrice: 123999,
           reducedPrice: 110318,
           discount: 20,
@@ -102,10 +109,10 @@ export default class HomePage extends Component {
         },
         {
           id: 7,
-          name: "Realme Narzo 20(Gloey Silver,64 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "SLIM SHAKE CHOCOLATE",
+          image:imagePath.item7,
           originalPrice: 12999,
+          qnt:1, 
           reducedPrice: 10318,
           discount: 20,
           star: 3.9,
@@ -115,28 +122,16 @@ export default class HomePage extends Component {
         },
         {
           id: 8,
-          name: "Realme X7(Space Sliver, 128 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
+          name: "TRIPLE GINSENG",
+          image:imagePath.item8,
           originalPrice: 17999,
+          qnt:1, 
           reducedPrice: 13318,
           discount: 48,
           star: 3.9,
           number: 65067,
           emi: "No Cost EMI",
           exchange: 1200,
-        },
-        {
-          id: 9,
-          name: "Apple iPhone 11(White, 64 GB)",
-          image:
-          "https://zindadeal.com/wp-content/uploads/2020/08/Realme-c11-grey.jpg",
-          originalPrice: 118999,
-          reducedPrice: 15318,
-          discount: 68,
-          star: 3.9,
-          number: 65067,
-          emi: "No Cost EMI",
         },
         
       ],
@@ -168,10 +163,7 @@ export default class HomePage extends Component {
 
   setCounter = (item) => {
     //item >> array >>
-    dispatch({
-      type:types.HOMEPAGE,
-      payload:item
-    })
+    
 
     const { counter,cartArray,itemList ,price} = this.state;
     let bool = true
@@ -179,18 +171,23 @@ export default class HomePage extends Component {
 
    for( let i=0;i<cartArray.length;i++) 
     if(cartArray[i].id == item.id){
-      alert("already added")
+     showMessage({
+       message:"Already Added",
+       type:"warning"
+     })
       bool = false
     }
 if (bool) {
- 
+  actions.addData(item)
+ actions.totalPrice(item.id)
   console.log(item,"item........")
   
   let newCartArray = [...cartArray, item]
-  this.setState({counter: counter+1, cartArray: newCartArray,})
+  this.setState({ cartArray: newCartArray,})
 }      
   };
   render() {
+  //  console.log(this.props.listItems.length,"in homepage")
     const { itemList, counter, cartArray,price } = this.state;
     // const { onItemSelected, selectedItem } = this;
     return (
@@ -207,19 +204,13 @@ if (bool) {
           >
             <View style={{ flexDirection: "row", margin: 10 }}>
               <Image
-                style={{ height: 60, width: 60 }}
+                style={{ height: 60, width: 60 ,tintColor:"#36B6B0"}}
                 source={{
                   uri:
                     "https://icon-library.com/images/white-menu-icon/white-menu-icon-12.jpg",
                 }}
               />
-              <Image
-                style={{ height: 50, width: 90, marginLeft: 15, marginTop: 5 }}
-                source={{
-                  uri:
-                    "https://couponcode-images.s3-ap-southeast-1.amazonaws.com/public/shop/240.jpg",
-                }}
-              />
+              <Text style={{color:"#36B6B0",fontSize:25,marginTop:12}}>HEALT<Text style={{backgroundColor:"#36B6B0",color:"white"}}>HK</Text>ART</Text>
             </View>
             <View style={{ flexDirection: "row", margin: 20 }}>
               <Image
@@ -235,10 +226,7 @@ if (bool) {
               >
                 <Image
                   style={{ height: 27, width: 27 }}
-                  source={{
-                    uri:
-                      "https://www.iconsdb.com/icons/preview/white/cart-8-xxl.png",
-                  }}
+                  source={imagePath.cart}
                 />
               </TouchableOpacity>
             </View>
@@ -250,74 +238,99 @@ if (bool) {
             />
 
             <Image
-              style={{
-                height: 25,
-                width: 25,
-                marginRight: 15,
-                position: "absolute",
-                left: 10,
-              }}
+              style={styles.searchIcon}
               source={{
                 uri:
                   "https://images.vexels.com/media/users/3/132068/isolated/preview/f9bb81e576c1a361c61a8c08945b2c48-search-icon-by-vexels.png",
               }}
             />
             <Image
-              style={{
-                height: 27,
-                width: 26,
-                marginRight: 15,
-                position: "absolute",
-                right: 10,
-              }}
+              style={styles.voiceIcon}
               source={{
                 uri:
                   "https://www.materialui.co/materialIcons/hardware/keyboard_voice_grey_192x192.png",
               }}
             />
           </View>
+
         </View>
-        <View style={{ marginBottom: 50 }}>
-          <FlatList
+        {/*  */}
+        <View
+          style={ styles.counter
+           
+          }
+        >
+          <Text style={{ color: "white" }}>{this.props.listItems.length}</Text>
+        </View>
+        <ScrollView>
+        <View style={{height:height/2.8}}>
+        <MyCarousel />
+        </View>
+        <View style={{ paddingBottom: 120}}>
+
+           <FlatList
             // cartArray={cartArray}
             itemList={itemList}
-           
+          
             navigationProp={this.props.navigation}
-            // counter={counter}
+             counter={this.props.listItems.length}
             setCounter={this.setCounter}
-          />
-        </View>
-        <View
-          style={{
-            position: "absolute",
-            backgroundColor: "red",
-            right: 15,
-            top: 12,
-            borderWidth: 0.5,
-            borderRadius: 20,
-            width: 15,
-            justifyContent: "center",
-            alignItems: "center",
-            borderColor: "white",
-          }}
-        >
-          <Text style={{ color: "white" }}>{counter}</Text>
-        </View>
+          /> 
+         </View>
+         </ScrollView>
       </View>
+     
     );
   }
 }
+const mapStateToProps=state=>
+{
+  return(
+    {
+      listItems:state.home.listItems
+    }
+  )
+}
 const styles = StyleSheet.create({
   navbar: {
-    backgroundColor: "#2874f0",
+    backgroundColor: "white",
     height: 120,
   },
   searchBar: {
     backgroundColor: "white",
-    height: 35,
+    height: 40,
     justifyContent: "center",
     position: "relative",
     marginLeft: 8,
     marginRight: 8,
+    borderWidth:1,borderColor:"lightgrey",
+    borderRadius:10
   },
+  counter:{
+    position: "absolute",
+    backgroundColor: "red",
+    right: 15,
+    top: 12,
+    borderWidth: 0.5,
+    borderRadius: 20,
+    width: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "white",
+  },
+  voiceIcon:{
+    height: 27,
+    width: 26,
+    marginRight: 15,
+    position: "absolute",
+    right: 10,
+  },
+  searchIcon:{
+    height: 25,
+    width: 25,
+    marginRight: 15,
+    position: "absolute",
+    left: 10,
+  }
 });
+ export default connect(mapStateToProps)(HomePage)

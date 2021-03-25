@@ -4,3 +4,6 @@ export const LOGIN = getApiUrl('/user/loginUser');
 export const SIGNUP = getApiUrl('/user/registerUser');
 export const LATEST_DEALS = getApiUrl('/latest/deals');
 export const UPLOAD_IMAGE=getApiUrl('/common/uploadFile')
+export const MOBILE_VERIFY='https://api.talktier.com/user/v1/loginSignupOtp'
+export const OTP_VERIFY='https://api.talktier.com/user/v1/verifyOtp'
+ export const GET_USERS='https://api.talktier.com/user/v1/getUserSearch'
