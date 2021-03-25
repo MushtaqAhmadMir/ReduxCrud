@@ -1,6 +1,6 @@
 import React from 'react'
 import {View,Text,TouchableOpacity,Image,TextInput,StyleSheet} from 'react-native'
-import BatchedBridge from 'react-native/Libraries/BatchedBridge/BatchedBridge'
+
 import imagePath from '../constants/imagePath'
 import navigationStrings from '../constants/navigationStrings'
 import colors from '../styles/colors'
@@ -15,13 +15,13 @@ export default function Header(props) {
         >
           <View style={{ flexDirection: "row", margin: 10 }}>
             <Image
-              style={{ height: 60, width: 60 ,tintColor:"#36B6B0"}}
+              style={{ height: 60, width: 60 ,tintColor:colors.themeColor}}
               source={{
                 uri:
                   "https://icon-library.com/images/white-menu-icon/white-menu-icon-12.jpg",
               }}
             />
-            <Text style={{color:"#36B6B0",fontSize:25,marginTop:12}}>HEALT<Text style={{backgroundColor:"#36B6B0",color:"white"}}>HK</Text>ART</Text>
+            <Text style={{color:colors.themeColor,fontSize:25,marginTop:12}}>HEALT<Text style={{backgroundColor:colors.themeColor,color:"white"}}>HK</Text>ART</Text>
           </View>
           <View style={{ flexDirection: "row", margin: 20 }}>
             <Image

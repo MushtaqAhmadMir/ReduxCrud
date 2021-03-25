@@ -9,7 +9,7 @@ function  Routes(props) {
     const {userData}=props
   //  const{name}=props.userData
   
-      console.log(props.userData," otp name Data in routes")
+      console.log(props.userData," userdata   in routes")
   return (
     <NavigationContainer>
       <Stack.Navigator>

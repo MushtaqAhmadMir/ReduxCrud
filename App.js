@@ -12,7 +12,6 @@ class App extends Component {
   componentDidMount() {
     getUserData().then((res) => {
       if (res) {
-        // console.log(res.contactDetails, " otp detail IN app js")
         actions.saveUserData(res)
       }
     });

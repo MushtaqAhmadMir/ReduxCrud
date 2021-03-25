@@ -49,12 +49,7 @@ class DetailPage extends Component {
           </View>
           <Text style={{fontSize: 20, marginLeft: 10}}>{name}</Text>
           <Text
-            style={{
-              backgroundColor: '#aaf2c4',
-              color: 'green',
-              width: 100,
-              margin: 10,
-            }}>
+            style={styles.nameTxt}>
             Extra {'\u20B9'}4000 off
           </Text>
           <View style={{flexDirection: 'row'}}>
@@ -219,6 +214,15 @@ const styles = StyleSheet.create({
   itemImg: {
     height: 100,
     width: 80,
+  },
+  nameTxt:
+  {
+    
+      backgroundColor: '#aaf2c4',
+      color: 'green',
+      width: 100,
+      margin: 10,
+    
   },
   content: {
     flexDirection: 'row',

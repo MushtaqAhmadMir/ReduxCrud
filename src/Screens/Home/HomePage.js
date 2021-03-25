@@ -18,6 +18,7 @@ import MyCarousel from '../../Components/SnapCarousel'
 import actions from "../../redux/actions";
 import { connect } from "react-redux";
 import { showMessage } from "react-native-flash-message";
+import colors from "../../styles/colors";
 
 const {height,width} = Dimensions.get("screen")
 
@@ -193,7 +194,7 @@ if (bool) {
     return (
       <View
         style={{
-          backgroundColor: "white",
+          backgroundColor: colors.white,
           justifyContent: "space-between",
           position: "relative",
         }}
@@ -204,13 +205,13 @@ if (bool) {
           >
             <View style={{ flexDirection: "row", margin: 10 }}>
               <Image
-                style={{ height: 60, width: 60 ,tintColor:"#36B6B0"}}
+                style={{ height: 60, width: 60 ,tintColor:colors.themeColor}}
                 source={{
                   uri:
                     "https://icon-library.com/images/white-menu-icon/white-menu-icon-12.jpg",
                 }}
               />
-              <Text style={{color:"#36B6B0",fontSize:25,marginTop:12}}>HEALT<Text style={{backgroundColor:"#36B6B0",color:"white"}}>HK</Text>ART</Text>
+              <Text style={{color:colors.themeColor,fontSize:25,marginTop:12}}>HEALT<Text style={{backgroundColor:colors.themeColor,color:colors.white}}>HK</Text>ART</Text>
             </View>
             <View style={{ flexDirection: "row", margin: 20 }}>
               <Image

@@ -13,6 +13,15 @@ export function saveUserData(data){
   })
 }
 
+export function deleteUserData(){
+  // console.log(data, "otp  User Data in Actoins")
+  dispatch({
+    type:types.DELETE_USERDATA,
+    payload:null
+  })
+}
+
+
 export function login(data = {}) {
   return new Promise((resolve,reject)=>
   {
